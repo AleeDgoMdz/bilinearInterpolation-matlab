@@ -2,22 +2,33 @@
 long = -ncread("datos/CC_Temps_Vars_2000.nc","Longitude");
 lat = ncread("datos/CC_Temps_Vars_2000.nc","Latitude");
 precip = ncread("datos/CC_Temps_Vars_2000.nc","PRECIP");
+[time,~] = size(precip);
+
 
 %Limpieza de datos (eliminacion de nan data y datos)
 data = [long lat precip(1,:)'];
 filData = data(sum(isnan(data),2)==0,:);
 filData = double(unique(filData(:,:),"rows","first"));
 
-%Obtencion xgrid y ygrid para el meshgrid
+%Obtencion xgrid y ygrid para la interpolacion
 xgrid = -117.12512:0.018: -86.74157;
 ygrid =  14.54628 :0.018:  32.71284;
 
-%xdata = double(filData(:,1));
-%ydata = double(filData(:,2));
-%zdata = double(filData(:,3));
-[xq,yq] = meshgrid(xgrid,ygrid);
+%Generacion de la malla interpolada f
+[x,y]= ndgrid(xgrid,ygrid);
+f= scatteredInterpolant(filData(:,1:2),filData(:,3),"linear","linear");
+interData = f(x,y); %Interpolacion y extrapolacion a partir de la malla f
 
-%interpolation = griddata(xdata,ydata,zdata,xq,yq); Opcion relativamente
-%lenta para interpolar
 
-vq = scatteredInterpolant(filData(:,1:2),filData(:,3),)
+
+%Lectura del shpfile y deliminatacion de la malla interpolada
+%mx = shaperead("shpMx/mx.shp","UseGeoCoords",true);
+
+for ntime=1:time
+    data = [long lat precip(ntime,:)'];
+    filData = data(sum(isnan(data),2)==0,:);
+    filData = double(unique(filData(:,:),"rows","first"));
+    
+
+
+end
