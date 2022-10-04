@@ -1,5 +1,11 @@
 datos
+salidas1_
+netcdfs_mensuales
 mxshp
 shpMx
 *.zip
 *.tif
+*.mat
+*.nc
+*.asv
+*.fig
