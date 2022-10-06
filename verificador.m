@@ -32,3 +32,16 @@ meanAgostoS= datos(:,:,9);
 a = mean(meanAgostoS,"all",'omitnan');
 b = mean(meanAgosto,"all",'omitnan');
 c = a==b
+
+%-------verificacion de la generacion correcta de netcdf mensuales
+net = ncread("monthlyMean/promedio_5.nc","mean");
+anioPrueba = ncread("mensuales/promedio_1970.nc","mean");
+
+a = mean(net(:,:,10),"all","omitnan");
+b = mean(anioPrueba(:,:,5),"all","omitnan");
+c = a==b
+
+
+
+
+
