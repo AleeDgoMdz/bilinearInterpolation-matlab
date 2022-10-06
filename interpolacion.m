@@ -26,6 +26,7 @@ for ntime=1:time
 end
 meanYear = mean(interYear,3);
 sumYear = sum(interYear,3);
+
 %Lectura del raster para cortar
 [A,R] = readgeoraster("mx_2000.tif");
 A = flipud(A); %acomodo de la matriz
