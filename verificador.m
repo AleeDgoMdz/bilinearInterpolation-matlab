@@ -41,7 +41,21 @@ a = mean(net(:,:,10),"all","omitnan");
 b = mean(anioPrueba(:,:,5),"all","omitnan");
 c = a==b
 
-
+%--verificacion de la existencia (o no) de valores negativos
+listfiles = dir("meanMensual/*.mat");
+inicio =85;
+fin = 142;
+for file=inicio:fin
+    path = strcat("datos/",listfiles(file).name);
+    precipData = ncread(path,"PRECIP");
+    logical = precipData(:,:)>=0 | isnan(precipData);
+    result = mean(logical,"all");
+    if result ==1
+        disp(strcat("no negativos----",listfiles(file).name));
+    else
+        disp(strcat("SI NEGATIVOS----",listfiles(file).name),"------");
+    end
+end
 
 
 
